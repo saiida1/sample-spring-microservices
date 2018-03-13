@@ -12,6 +12,8 @@ checkout scm
                     sshagent(['Credential Name']) {
                        // sh "git config --add remote.origin.fetch +refs/heads/master:refs/remotes/origin/master"
                         //sh "git fetch --no-tags"
+                        String AUTHOR_NAME = sh(script: "git show -s --format='%an' HEAD", returnStdout: true).split('\r\n')[2].trim()
+                        echo "The last commit was written by ${AUTHOR_NAME}."
                         List<String> sourceChanged = sh(returnStdout: true, script: "git diff --name-only HEAD^ origin/${env.BRANCH_NAME}").split()
                         for (int i = 0; i < sourceChanged.size(); i++) {
                             echo "** Here ***"
@@ -37,6 +39,10 @@ def micro() {
 
                 sh "pwd ;chmod +x script.sh"
                 sh "pwd ; ./script.sh "
+                    
+
+
+
                     
             }
             stage('scrip') {
