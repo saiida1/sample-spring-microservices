@@ -124,10 +124,12 @@ def notifySlack(String buildStatus = 'STARTED') {
         throw e
     } finally {
         notifySlack(currentBuild.result)
+           node{
         stage('DelDir') {
         echo "** deldir ***"
         deleteDir() 
         }
+           }
     }
 
     
