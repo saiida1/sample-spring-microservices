@@ -99,8 +99,7 @@ def notifySlack() {
          [
             "mrkdwn_in": ['text','pretext'],
             "color": "#199515",
-            "text": "*$JOB_NAME:* <$BUILD_URL|Build #$BUILD_NUMBER>, _microservice_ in _${clusterName}_ successfully updated.",
-            "fallback": "*Production Deployer*: operation succeeded."
+            "text": "cc",
         ]
       ]
    ])
