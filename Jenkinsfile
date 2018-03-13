@@ -92,14 +92,11 @@ def micro() {
     }
 def notifySlack() {
      slackSend([
-      "username": "Production Deployer",
+      "text": "cc",
       "icon_emoji": ":robot_face:",
-      "mrkdwn": true,
       "attachments": [
          [
-            "mrkdwn_in": ['text','pretext'],
-            "color": "#199515",
-            "text": "cc",
+            "color": "#199515",  
         ]
       ]
    ])
