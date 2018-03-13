@@ -1,4 +1,6 @@
 #!/usr/bin/env groovy
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 def isAccountChanged = true
 def isCustomerChanged = true
 def isDiscoveryChanged = false
@@ -86,25 +88,17 @@ def micro() {
             }
 
     }
-def notifySlack(String buildStatus = 'STARTED') {
-    // Build status of null means success.
-    buildStatus = buildStatus ?: 'SUCCESS'
+def notifySlack() {
+  JSONObject attachment = new JSONObject();
+  attachment.put('text','I find your lack of faith disturbing!');
+  attachment.put('fallback','Hey, Vader seems to be mad at you.');
+  attachment.put('color','#ff0000');
+  JSONArray attachments = new JSONArray();
+  attachments.add(attachment);
+  println attachments.toString()
 
-    def color
+  slackSend(color: '#00FF00', channel: channel, attachments: attachments.toString())
 
-    if (buildStatus == 'STARTED') {
-        color = '#D4DADF'
-    } else if (buildStatus == 'SUCCESS') {
-        color = '#BDFFC3'
-    } else if (buildStatus == 'UNSTABLE') {
-        color = '#FFFE89'
-    } else {
-        color = '#FF9FA1'
-    }
-
-    def msg = "${buildStatus}: `${env.JOB_NAME}` #${env.BUILD_NUMBER}:\n${env.BUILD_URL}"
-
-    slackSend(color: color, message: msg)
 }
 
 node {
@@ -115,9 +109,9 @@ node {
     } catch (e) {
         currentBuild.result = 'FAILURE'
         throw e
-    } finally {
-        notifySlack(currentBuild.result)
-    }
+    } /*finally {
+        notifySlack()
+    }*/
 }
     
 
