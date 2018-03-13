@@ -124,6 +124,7 @@ def notifySlack(String buildStatus = 'STARTED') {
         throw e
     } finally {
         notifySlack(currentBuild.result)
+         deleteDir()
     }
 
     
