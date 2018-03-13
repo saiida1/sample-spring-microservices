@@ -78,7 +78,7 @@ def notifySlack(String buildStatus = 'STARTED') {
             def msg = "${buildStatus}: `${env.JOB_NAME}` #${env.BUILD_NUMBER}:\n${env.BUILD_URL}"
             slackSend(color: color, image_url: image_url, message: msg)
 }
-    
+     try { 
          stage('Test') {
                   if (isAccountChanged == true) {
 
@@ -97,7 +97,7 @@ def notifySlack(String buildStatus = 'STARTED') {
                    }
                  }
          }
- try {  
+ 
         notifySlack()
         // Existing build steps.
     } catch (e) {
