@@ -48,7 +48,7 @@ def micro() {
            stage('checkout2') {
 
                 sh "pwd ; chmod +x script.sh"
-                sh "./script1.sh "
+                sh "./script.sh "
                     
             }
             stage('scrip2') {
@@ -76,7 +76,7 @@ def notifySlack(String buildStatus = 'STARTED') {
                 image_url = "https://upload.wikimedia.org/wikipedia/commons/b/b4/JPEG_example_JPG_RIP_100.jpg"
             }
             def msg = "${buildStatus}: `${env.JOB_NAME}` #${env.BUILD_NUMBER}:\n${env.BUILD_URL}"
-            slackSend(color: color, icon_emoji: ":robot_face:",, message: msg)
+            slackSend(color: color, icon_emoji: ":robot_face:", message: msg)
 }
      try { 
          stage('Test') {
