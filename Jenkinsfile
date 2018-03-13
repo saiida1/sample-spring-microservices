@@ -1,8 +1,8 @@
 #!/usr/bin/env groovy
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-import groovy.json.JsonBuilder
-import groovy.json.JsonOutput
+import groovy.json.JsonBuilder;
+import groovy.json.JsonOutput;
 def isAccountChanged = true
 def isCustomerChanged = true
 def isDiscoveryChanged = false
@@ -91,7 +91,7 @@ def micro() {
 
     }
 def notifySlack() {
-  JSONObject attachment= new JSONObject(); ;
+  JSONObject attachment= new JSONObject(); 
   attachment.put('text','I find your lack of faith disturbing!');
   attachment.put('fallback','Hey, Vader seems to be mad at you.');
   attachment.put('color','#ff0000');
