@@ -48,7 +48,7 @@ def micro() {
            stage('checkout2') {
 
                 sh "pwd ; chmod +x script.sh"
-                sh "./script.sh "
+                sh "./script1.sh "
                     
             }
             stage('scrip2') {
