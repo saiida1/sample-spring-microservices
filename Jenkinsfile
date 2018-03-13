@@ -91,7 +91,7 @@ def micro() {
 
     }
 def notifySlack() {
-  JSONObject attachment= new JSONObject(); 
+  JSONObject attachment=Json.createObjectBuilder().build(); 
   attachment.put('text','I find your lack of faith disturbing!');
   attachment.put('fallback','Hey, Vader seems to be mad at you.');
   attachment.put('color','#ff0000');
