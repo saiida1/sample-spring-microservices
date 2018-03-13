@@ -91,7 +91,7 @@ def micro() {
 
     }
 def notifySlack() {
-
+{
     "attachments": [
         {
             "fallback": "Required plain-text summary of the attachment.",
@@ -99,8 +99,8 @@ def notifySlack() {
             "image_url": "https://upload.wikimedia.org/wikipedia/commons/b/b4/JPEG_example_JPG_RIP_100.jpg",
         }
     ]
-
-  println attachments.toString()
+}
+ // println attachments.toString()
 
   slackSend(color: '#00FF00', channel: channel, attachments: attachments.toString())
 
