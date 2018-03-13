@@ -5,7 +5,6 @@ def isAccountChanged = true
 def isCustomerChanged = true
 def isDiscoveryChanged = false
 def isGatewayChanged = false
-
 node {  
         stage('checkout') 
 {         
