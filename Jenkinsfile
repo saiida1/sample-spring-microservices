@@ -91,12 +91,15 @@ def micro() {
 
     }
 def notifySlack() {
-  JSONObject attachment=Json.createObjectBuilder().build(); 
-  attachment.put('text','I find your lack of faith disturbing!');
-  attachment.put('fallback','Hey, Vader seems to be mad at you.');
-  attachment.put('color','#ff0000');
-  JSONArray attachments = new JSONArray();
-  attachments.add(attachment);
+{
+    "attachments": [
+        {
+            "fallback": "Required plain-text summary of the attachment.",
+            "text": "Optional text that appears within the attachment",
+            "image_url": "https://upload.wikimedia.org/wikipedia/commons/b/b4/JPEG_example_JPG_RIP_100.jpg",
+        }
+    ]
+}
   println attachments.toString()
 
   slackSend(color: '#00FF00', channel: channel, attachments: attachments.toString())
