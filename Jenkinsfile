@@ -91,7 +91,7 @@ def micro() {
 
     }
 def notifySlack() {
-    def payload = JsonOutput.toJson([
+     slackSend([
       "username": "Production Deployer",
       "icon_emoji": ":robot_face:",
       "mrkdwn": true,
@@ -106,7 +106,7 @@ def notifySlack() {
    ])
  // println attachments.toString()
 
-  slackSend(payload: payload.toString())
+ // slackSend(payload: payload.toString())
 
 }
 
