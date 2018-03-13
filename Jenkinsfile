@@ -12,6 +12,8 @@ checkout scm
                     sshagent(['Credential Name']) {
                        // sh "git config --add remote.origin.fetch +refs/heads/master:refs/remotes/origin/master"
                         //sh "git fetch --no-tags"
+                        AUTHOR_NAME = sh(returnStdout: true, script: "git show -s --format='%an' HEAD").split()
+                        echo "The last commit was written by ${AUTHOR_NAME}."
                         List<String> sourceChanged = sh(returnStdout: true, script: "git diff --name-only HEAD^ origin/${env.BRANCH_NAME}").split()
                         for (int i = 0; i < sourceChanged.size(); i++) {
                             echo "** Here ***"
@@ -38,6 +40,10 @@ def micro() {
                 sh "pwd ;chmod +x script.sh"
                 sh "pwd ; ./script.sh "
                     
+
+
+
+                    
             }
             stage('scrip') {
 
@@ -58,6 +64,7 @@ def micro() {
                     
             }     
 }
+
 def notifySlack(String buildStatus = 'STARTED') {
             buildStatus = buildStatus ?: 'SUCCESS'
             def color
@@ -75,7 +82,7 @@ def notifySlack(String buildStatus = 'STARTED') {
                 color = '#FF0000'
                 image_url = "https://upload.wikimedia.org/wikipedia/commons/b/b4/JPEG_example_JPG_RIP_100.jpg"
             }
-            def msg = "${buildStatus}: `${env.JOB_NAME}` #${env.BUILD_NUMBER}:\n${env.BUILD_URL}"
+            def msg = "${buildStatus}: `${env.JOB_NAME}` #${env.BUILD_NUMBER}:\n${env.BUILD_URL} \n ${env.GIT_COMMITTER_EMAIL}"
             slackSend(color: color, icon_emoji: ":robot_face:", message: msg)
 }
      try { 
@@ -105,7 +112,7 @@ def notifySlack(String buildStatus = 'STARTED') {
         throw e
     } finally {
         notifySlack(currentBuild.result)
-           node{
+        node{
         stage('DelDir') {
         echo "** deldir ***"
         deleteDir() 
