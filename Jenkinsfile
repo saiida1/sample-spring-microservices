@@ -91,18 +91,22 @@ def micro() {
 
     }
 def notifySlack() {
-{
-    "attachments": [
-        {
-            "fallback": "Required plain-text summary of the attachment.",
-            "text": "Optional text that appears within the attachment",
-            "image_url": "https://upload.wikimedia.org/wikipedia/commons/b/b4/JPEG_example_JPG_RIP_100.jpg",
-        }
-    ]
-}
+    def payload = JsonOutput.toJson([
+      "username": "Production Deployer",
+      "icon_emoji": ":robot_face:",
+      "mrkdwn": true,
+      "attachments": [
+         [
+            "mrkdwn_in": ['text','pretext'],
+            "color": "#199515",
+            "text": "*$JOB_NAME:* <$BUILD_URL|Build #$BUILD_NUMBER>, _microservice_ in _${clusterName}_ successfully updated.",
+            "fallback": "*Production Deployer*: operation succeeded."
+        ]
+      ]
+   ])
  // println attachments.toString()
 
-  slackSend(color: '#00FF00', channel: channel, attachments: attachments.toString())
+  slackSend(payload: payload.toString())
 
 }
 
