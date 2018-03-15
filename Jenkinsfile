@@ -114,9 +114,15 @@ def notifySlack(String buildStatus = 'STARTED') {
         notifySlack(currentBuild.result)
         node{
         stage('DelDir') {
+        mail body: "project build error is here: ${env.BUILD_URL}" ,
+            from: 'saiida1.sghaier@gmail.com',
+            replyTo: 'saiida1.sghaier@gmail.com',
+            subject: 'project build failed',
+            to: 'saiida1.sghaier@gmail.com'
         echo "** deldir ***"
         deleteDir() 
         }
+
            }
     }
 
