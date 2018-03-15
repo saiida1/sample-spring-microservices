@@ -114,9 +114,18 @@ def notifySlack(String buildStatus = 'STARTED') {
         notifySlack(currentBuild.result)
         node{
         stage('DelDir') {
+  emailext (
+      to: 'saiida1.sghaier@gmail.com',
+      subject: "${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+      body: """<p>${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
+    <p>Check console output at &QUOT;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>&QUOT;</p>"""
+,
+      recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+    )
         echo "** deldir ***"
         deleteDir() 
         }
+
            }
     }
 
