@@ -116,6 +116,11 @@ def notifySlack(String buildStatus = 'STARTED') {
         echo "** deldir ***"
         deleteDir() 
         }
+             mail body: "project build error is here: ${env.BUILD_URL}" ,
+            from: 'saiida1.sghaier@gmail.com',
+            replyTo: 'reply@gmail.com',
+            subject: 'project build failed',
+            to: 'saiida1.sghaier@gmail.com'
            }
     }
 
