@@ -12,7 +12,7 @@ checkout scm
                     sshagent(['Credential Name']) {
                        // sh "git config --add remote.origin.fetch +refs/heads/master:refs/remotes/origin/master"
                         //sh "git fetch --no-tags"
-                        String AUTHOR_NAME = sh(script: "git show -s --format='%an' HEAD", returnStdout: true).split('\r\n')[2].trim()
+                        String AUTHOR_NAME = sh(script: "git show -s --format='%an' HEAD", returnStdout: true).split()
                         echo "The last commit was written by ${AUTHOR_NAME}."
                         List<String> sourceChanged = sh(returnStdout: true, script: "git diff --name-only HEAD^ origin/${env.BRANCH_NAME}").split()
                         for (int i = 0; i < sourceChanged.size(); i++) {
@@ -116,6 +116,11 @@ def notifySlack(String buildStatus = 'STARTED') {
         echo "** deldir ***"
         deleteDir() 
         }
+             mail body: "project build error is here: ${env.BUILD_URL}" ,
+            from: 'saiida1.sghaier@gmail.com',
+            replyTo: 'reply@gmail.com',
+            subject: 'project build failed',
+            to: 'saiida1.sghaier@gmail.com'
            }
     }
 
