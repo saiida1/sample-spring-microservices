@@ -86,5 +86,35 @@ def micro() {
             }
 
     }
+node {
+    stage('deploy staging') {
+        if (env.BRANCH_NAME == 'master'){
+try {
+                        // remove the old rancher stack in case it exists, if not ignore all errors
+                       sh 'cd stack-master && rancher-compose --url http://192.168.56.101:8080/v1/projects/1a5 --access-key B9D9EDC9AF35290AF178 --secret-key DRYbZZ96uM4mNTWWMooqrQVPXDcLm95sEGjMqBNd down'
+                       sh 'cd stack-master && rancher-compose --url http://192.168.56.101:8080/v1/projects/1a5 --access-key B9D9EDC9AF35290AF178 --secret-key DRYbZZ96uM4mNTWWMooqrQVPXDcLm95sEGjMqBNd rm'
+                            sleep(20)
+                    } catch (any) {}
+                
+
+                    // now deploy the new stack
+                    sh 'cd stack-master && rancher-compose --url http://192.168.56.101:8080/v1/projects/1a5 --access-key B9D9EDC9AF35290AF178 --secret-key DRYbZZ96uM4mNTWWMooqrQVPXDcLm95sEGjMqBNd up -d'
+}
+           
+else {
+                    try {
+                        // remove the old rancher stack in case it exists, if not ignore all errors
+                       sh 'cd stack-trunk && rancher-compose --url http://192.168.56.101:8080/v1/projects/1a5 --access-key B9D9EDC9AF35290AF178 --secret-key DRYbZZ96uM4mNTWWMooqrQVPXDcLm95sEGjMqBNd down'
+                       sh 'cd stack-trunk && rancher-compose --url http://192.168.56.101:8080/v1/projects/1a5 --access-key B9D9EDC9AF35290AF178 --secret-key DRYbZZ96uM4mNTWWMooqrQVPXDcLm95sEGjMqBNd rm'
+                            sleep(20)
+                    } catch (any) {}
+                
+
+                    // now deploy the new stack
+                    sh 'cd stack-trunk && rancher-compose --url http://192.168.56.101:8080/v1/projects/1a5 --access-key B9D9EDC9AF35290AF178 --secret-key DRYbZZ96uM4mNTWWMooqrQVPXDcLm95sEGjMqBNd up -d'
+    }
+}
+  
+}
     
 
