@@ -91,15 +91,15 @@ node {
 
            
 
-     //           rancherCli.inside {
-       //             try {
+
+                    try {
                         // remove the old rancher stack in case it exists, if not ignore all errors
-         //               sh 'cd docker && rancher rm demo-webshop-staging'
-           //         } catch (any) {}
-             //   }
-       //         rancherCli.inside {
+                       sh 'cd docker && cd docker && rancher-compose --url http://192.168.56.101:8080/v1/projects/1a5 --access-key 126F12D08951CE0554F2 --secret-key Ps1tpHbUmJ93LZ2avGQgrXGUJLgqqn86CMd3V56h rm'
+                    } catch (any) {}
+                }
+
                     // now deploy the new stack
-                    sh 'rancher-compose --url http://192.168.56.101:8080/v1/projects/1a5 --access-key 126F12D08951CE0554F2 --secret-key Ps1tpHbUmJ93LZ2avGQgrXGUJLgqqn86CMd3V56h up'
+                    sh 'cd docker && rancher-compose --url http://192.168.56.101:8080/v1/projects/1a5 --access-key 126F12D08951CE0554F2 --secret-key Ps1tpHbUmJ93LZ2avGQgrXGUJLgqqn86CMd3V56h up'
          //       }
             
     }
