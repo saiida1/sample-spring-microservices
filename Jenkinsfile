@@ -104,7 +104,7 @@ def micro() {
                     sh 'cd docker && rancher up -s demo-webshop-staging -d'
                 }
             
-        }
+        
    
 }
     
