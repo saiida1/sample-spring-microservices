@@ -89,9 +89,7 @@ def micro() {
 
     stage('deploy staging') {
 
-            
-                def rancherCli = docker.image('rancher-server:5000/rburgst/rancher-cli-configured')
-                rancherCli.pull()
+           
 
                 rancherCli.inside {
                     try {
@@ -104,7 +102,7 @@ def micro() {
                     sh 'cd docker && rancher up -s demo-webshop-staging -d'
                 }
             
-        }
+        
    
 }
     
