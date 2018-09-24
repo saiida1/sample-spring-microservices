@@ -86,7 +86,7 @@ def micro() {
             }
 
     }
-node {
+node ('slave01')  {
     stage('deploy staging') {
         if (env.BRANCH_NAME == 'master'){
 try {
