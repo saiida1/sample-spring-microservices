@@ -3,7 +3,7 @@ def isAccountChanged = true
 def isCustomerChanged = true
 def isDiscoveryChanged = false
 def isGatewayChanged = false
-node {  
+node( slave01) {  
         stage('checkout') 
 {         
 checkout scm     
