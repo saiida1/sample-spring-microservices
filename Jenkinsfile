@@ -62,7 +62,7 @@ def micro() {
  stage('Test') {
           if (isAccountChanged == true) {
 
-            node{
+            node ('slave01') {
 
                 dir('account-service'){         
                micro()
@@ -73,7 +73,7 @@ def micro() {
 
           if (isCustomerChanged == true) {
 
-            node{
+            node ('slave01') {
 
                     dir('customer-service'){
  
