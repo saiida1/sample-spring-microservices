@@ -3,6 +3,7 @@ def isAccountChanged = true
 def isCustomerChanged = true
 def isDiscoveryChanged = false
 def isGatewayChanged = false
+node ('slave01')  {
 node {  
         stage('checkout') 
 {         
@@ -116,5 +117,5 @@ else {
 }
   
 }
-    
+}
 
