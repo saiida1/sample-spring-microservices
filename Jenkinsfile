@@ -1,9 +1,10 @@
 #!/usr/bin/env groovy
+node ('slave01')  {
 def isAccountChanged = true
 def isCustomerChanged = true
 def isDiscoveryChanged = false
 def isGatewayChanged = false
-node('slave01') {  
+node {  
         stage('checkout') 
 {         
 checkout scm     
@@ -62,7 +63,7 @@ def micro() {
  stage('Test') {
           if (isAccountChanged == true) {
 
-            node ('slave01') {
+            node  {
 
                 dir('account-service'){         
                micro()
@@ -73,7 +74,7 @@ def micro() {
 
           if (isCustomerChanged == true) {
 
-            node ('slave01') {
+            node {
 
                     dir('customer-service'){
  
@@ -86,7 +87,7 @@ def micro() {
             }
 
     }
-node ('slave01')  {
+node  {
     stage('deploy staging') {
         if (env.BRANCH_NAME == 'master'){
 try {
@@ -116,5 +117,5 @@ else {
 }
   
 }
-    
+}
 
