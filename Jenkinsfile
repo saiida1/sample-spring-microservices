@@ -1,14 +1,31 @@
 #!/usr/bin/env groovy
-node ('slave01')  {
 def isAccountChanged = true
 def isCustomerChanged = true
 def isDiscoveryChanged = false
 def isGatewayChanged = false
+def micro() {
+            stage('checkout') {
+                sh "pwd ;chmod +x script.sh"
+                sh "pwd ; ./script.sh "                   
+            }
+            stage('scrip') {
+                sh "pwd ;chmod +x scrip.sh"
+                sh "pwd ; ./scrip.sh "                   
+            }
+           stage('checkout2') {
+                sh "pwd ; chmod +x script.sh"
+                sh "./script.sh "                   
+            }
+            stage('scrip2') {
+                sh "pwd ; chmod +x scrip.sh"
+                sh "pwd ; ./scrip.sh "                    
+            }     
+}  
 node {  
         stage('checkout') 
-{         
-checkout scm     
-}
+        {         
+                checkout scm     
+        }
         stage('Check for CHANGELOG update') {
                     sshagent(['Credential Name']) {
                        // sh "git config --add remote.origin.fetch +refs/heads/master:refs/remotes/origin/master"
@@ -29,93 +46,21 @@ checkout scm
                                 isGatewayChanged = true
                             }
                         }
-
                     }
-                }
             }
-def micro() {
-            stage('checkout') {
-
-                sh "pwd ;chmod +x script.sh"
-                sh "pwd ; ./script.sh "
-                    
-            }
-            stage('scrip') {
-
-                sh "pwd ;chmod +x scrip.sh"
-                sh "pwd ; ./scrip.sh "
-                    
-            }
-           stage('checkout2') {
-
-                sh "pwd ; chmod +x script.sh"
-                sh "./script.sh "
-                    
-            }
-            stage('scrip2') {
-
-                sh "pwd ; chmod +x scrip.sh"
-                sh "pwd ; ./scrip.sh "
-                    
-            }     
+     
+        stage('Test') {
+                 if (isAccountChanged == true) {
+                        dir('account-service'){         
+                                micro()
+                        }
+                 }
+                if (isCustomerChanged == true) {
+                        dir('customer-service'){
+                                 micro()              
+                        }
+                }           
+         }
 }
-       
- stage('Test') {
-          if (isAccountChanged == true) {
 
-            node  {
-
-                dir('account-service'){         
-               micro()
-                }
-            }
-
-            }
-
-          if (isCustomerChanged == true) {
-
-            node {
-
-                    dir('customer-service'){
- 
-                 micro()
-               
-                                            }
-
-            }
-            
-            }
-
-    }
-node  {
-    stage('deploy staging') {
-        if (env.BRANCH_NAME == 'master'){
-try {
-                        // remove the old rancher stack in case it exists, if not ignore all errors
-                       sh 'cd stack-master && rancher-compose --url http://192.168.56.101:8080/v1/projects/1a5 --access-key C2DDAAC5593E7F966C79 --secret-key NnLUqMUWJJFHLWjRkMH79JpTwu9HHmrrMphse3d5 down'
-                       sh 'cd stack-master && rancher-compose --url http://192.168.56.101:8080/v1/projects/1a5 --access-key C2DDAAC5593E7F966C79 --secret-key NnLUqMUWJJFHLWjRkMH79JpTwu9HHmrrMphse3d5 rm'
-                            sleep(20)
-                    } catch (any) {}
-                
-
-                    // now deploy the new stack
-                    sh 'cd stack-master && rancher-compose --url http://192.168.56.101:8080/v1/projects/1a5 --access-key C2DDAAC5593E7F966C79 --secret-key NnLUqMUWJJFHLWjRkMH79JpTwu9HHmrrMphse3d5 up -d'
-}
-           
-else {
-                    try {
-                        // remove the old rancher stack in case it exists, if not ignore all errors
-                       sh 'cd stack-trunk && rancher-compose --url http://192.168.56.101:8080/v1/projects/1a5 --access-key C2DDAAC5593E7F966C79 --secret-key NnLUqMUWJJFHLWjRkMH79JpTwu9HHmrrMphse3d5 down'
-                       sh 'cd stack-trunk && rancher-compose --url http://192.168.56.101:8080/v1/projects/1a5 --access-key C2DDAAC5593E7F966C79 --secret-key NnLUqMUWJJFHLWjRkMH79JpTwu9HHmrrMphse3d5 rm'
-                            sleep(20)
-                    } catch (any) {}
-                
-
-                    // now deploy the new stack
-                    sh 'cd stack-trunk && rancher-compose --url http://192.168.56.101:8080/v1/projects/1a5 --access-key C2DDAAC5593E7F966C79 --secret-key NnLUqMUWJJFHLWjRkMH79JpTwu9HHmrrMphse3d5 up -d'
-    }
-}
-  
-}
-}
 
