@@ -21,7 +21,7 @@ def micro() {
                 sh "pwd ; ./scrip.sh "                    
             }     
 }  
-node {  
+node ('slave01'){  
         stage('checkout') 
         {         
                 checkout scm     
