@@ -59,6 +59,7 @@ node ('slave01'){
                         dir('customer-service'){
                                  micro()              
                         }
+      
                 }           
          }
 }
